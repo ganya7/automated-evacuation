@@ -1,12 +1,18 @@
 import heapq
 
-def dijkstra(g,source,end):
+def dijkstra(g,d,source,end):
 	dist = [100]*len(g)
 	dist[source] = 0 #distance source vertex = 0, rest infinity
 	vertex = []
 	w = 0
 	e = 0
 	vis_d = [False]*len(g)	#initialize all vertices as unvisited and insert them in queue
+	
+	for i in range(len(d)):
+		for j in range(len(g)):
+			graph[d[i]][j] = 0
+			graph[j][d[i]] = 0
+		
 	for i in range(len(g)):
 		heapq.heappush(vertex,(dist[i],i))
 	parent = [-1]*n 	#array to store the shortest path from source
@@ -42,6 +48,7 @@ def path_print(parent,end,path):
 
 n = int(input("Enter number of vertex:"))
 graph = []
+danger_nodes = [3]
 
 print("Enter the weights in matrix:")
 for i in range(n):
@@ -52,7 +59,7 @@ for i in range(n):
 #start = input("Enter start node:")
 goal = input("Enter goal node:")
 for i in range(n):
-  if int(goal) != i:
+  if int(goal) != i and (i not in danger_nodes):
         print("Start node: ",i)
-        goal_ = dijkstra(graph,int(i),int(goal))
+        goal_ = dijkstra(graph,danger_nodes,int(i),int(goal))
     
