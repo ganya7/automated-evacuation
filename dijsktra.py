@@ -33,10 +33,11 @@ def dijkstra(g,d,source,end):
 	print("Path:")
 	path = path_print(parent,end,path)
 	print(path)
-	distance = 0
-	for k in range(len(path) - 1):
-		distance = distance + graph[path[k]][path[k+1]]
-	print(distance)
+	# distance = 0
+	# for k in range(len(path) - 1):
+		# distance = distance + graph[path[k]][path[k+1]]
+	# print(distance)
+	print(dist[end])
 	return dist[end]
 
 def path_print(parent,end,path):
@@ -48,7 +49,7 @@ def path_print(parent,end,path):
 
 n = int(input("Enter number of vertex:"))
 graph = []
-danger_nodes = [3]
+danger_nodes = [2]
 
 print("Enter the weights in matrix:")
 for i in range(n):
@@ -57,9 +58,20 @@ for i in range(n):
 	graph.append(graph_temp)
 	
 #start = input("Enter start node:")
-goal = input("Enter goal node:")
+goal = [0, 5]
 for i in range(n):
-  if int(goal) != i and (i not in danger_nodes):
-        print("Start node: ",i)
-        goal_ = dijkstra(graph,danger_nodes,int(i),int(goal))
-    
+        if(i not in goal):
+                print("Start node: ",i)
+                path_selection = [100]*len(goal)
+                for j in range(len(goal)):
+                        if int(goal[j]) != i and (i not in danger_nodes):
+                                path_selection[j] = dijkstra(graph,danger_nodes,int(i),int(goal[j]))
+                min_dist = path_selection[0]
+                final_goal = 0
+                for j in range(1,len(path_selection)-1):
+                        if path_selection[j] < min_dist:
+                                min_dist = path_selection[j]
+                                final_goal = j
+                                
+                print("final path calculated from node:")
+                goal_ = dijkstra(graph,danger_nodes,int(i),int(final_goal))
