@@ -1,3 +1,4 @@
+// Mapping pins to variables
 int tempSensor_2 = 0;
 int tempSensor_1 = 3;
 int smokeSensor_2 = 1;
@@ -7,13 +8,13 @@ int LED_2 = 8;
 int LED_3 = 12;
 int tempPin_1;
 int tempPin_2;
+int delete_node = 0;
 
 //to check the presence of fire
 boolean fire(float tempValue,float smokeValue){
-  if(tempValue>43)
+  if(tempValue>50)
     return true;
-  else
-    return false; 
+  return false; 
 }
 
 void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smokeValue_2){
@@ -23,6 +24,9 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
       digitalWrite(LED_1,HIGH);
       digitalWrite(LED_2,HIGH);
       digitalWrite(LED_3,HIGH);
+      delete_node = 888;
+      Serial.print("Node:");
+      Serial.println(delete_node);
     }
     //Fire at node 1
   else if(fire(tempValue_1,smokeValue_1)){
@@ -35,6 +39,9 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
     digitalWrite(LED_3,HIGH);
     delay(1000);
     digitalWrite(LED_3,LOW);
+    Serial.println();
+    delete_node = 777;
+    Serial.println(delete_node);
   }
   //Fire at node 2
   else if(fire(tempValue_2,smokeValue_2)){
@@ -47,6 +54,9 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
     digitalWrite(LED_1,HIGH);
     delay(1000);
     digitalWrite(LED_1,LOW);
+    delete_node = 999;
+    Serial.println();
+    Serial.println(delete_node);
   }
 }
 void setup()
@@ -61,21 +71,23 @@ void loop()
 //Temperature Input/Output
 tempPin_1 = analogRead(tempSensor_1);
 tempPin_2 = analogRead(tempSensor_2);
+//5V and 10bit -> ADC = Analog to digital converter = 10 bit - > 2^10 = 1024 -> 5000mV/1024bit = 0.488
+//10mv = 1 C
 float tempValue_1 = tempPin_1* 0.488;
 float tempValue_2 = tempPin_2* 0.488;
-Serial.println("temp 1");
+Serial.print("temp 1: ");
 Serial.println(tempValue_1);//Temperature at node 1
 delay(500);
-Serial.println("temp 2");
+Serial.print("temp 2: ");
 Serial.println(tempValue_2);//Temperature at node 2
 delay(500);
 //Smoke Sensor Input/Output
 float smokeValue_1 = analogRead(smokeSensor_1);
 float smokeValue_2 = analogRead(smokeSensor_2);
-Serial.println("smoke 1");
+Serial.print("smoke 1: ");
 Serial.println(smokeValue_1);//Smoke value at node 1
 delay(500);
-Serial.println("smoke 2");
+Serial.print("smoke 2: ");
 Serial.println(smokeValue_2);//Smoke value at node 2
 delay(500);
 blinkLED(tempValue_1,smokeValue_1,tempValue_2,smokeValue_2);
