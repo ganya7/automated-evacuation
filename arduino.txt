@@ -24,7 +24,7 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
       digitalWrite(LED_1,HIGH);
       digitalWrite(LED_2,HIGH);
       digitalWrite(LED_3,HIGH);
-      delete_node = 888;
+      delete_node = 3;
       Serial.print("Node:");
       Serial.println(delete_node);
     }
@@ -40,7 +40,8 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
     delay(1000);
     digitalWrite(LED_3,LOW);
     Serial.println();
-    delete_node = 777;
+    delete_node = 1;
+    Serial.print("Node:");
     Serial.println(delete_node);
   }
   //Fire at node 2
@@ -54,8 +55,9 @@ void blinkLED(float tempValue_1,float smokeValue_1,float tempValue_2,float smoke
     digitalWrite(LED_1,HIGH);
     delay(1000);
     digitalWrite(LED_1,LOW);
-    delete_node = 999;
+    delete_node = 2;
     Serial.println();
+    Serial.print("Node:");
     Serial.println(delete_node);
   }
 }
@@ -69,7 +71,9 @@ pinMode(LED_3,OUTPUT);//Setting LED to Output
 void loop()
 {
 //Temperature Input/Output
+delay(1000);  // milliseconds
 tempPin_1 = analogRead(tempSensor_1);
+delay(1000);
 tempPin_2 = analogRead(tempSensor_2);
 //5V and 10bit -> ADC = Analog to digital converter = 10 bit - > 2^10 = 1024 -> 5000mV/1024bit = 0.488
 //10mv = 1 C
@@ -80,9 +84,10 @@ Serial.println(tempValue_1);//Temperature at node 1
 delay(500);
 Serial.print("temp 2: ");
 Serial.println(tempValue_2);//Temperature at node 2
-delay(500);
+delay(1000);
 //Smoke Sensor Input/Output
 float smokeValue_1 = analogRead(smokeSensor_1);
+delay(1000);
 float smokeValue_2 = analogRead(smokeSensor_2);
 Serial.print("smoke 1: ");
 Serial.println(smokeValue_1);//Smoke value at node 1
