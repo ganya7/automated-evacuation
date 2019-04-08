@@ -30,8 +30,6 @@ class ThreadingExample(object):
     def run(self):
         """ Method that runs forever """
         while True:
-            # Do something
-            # print('Doing something imporant in the background')
             run_arduino()
             time.sleep(self.interval)
 
@@ -41,6 +39,7 @@ class ThreadingExample(object):
 
 def dijkstra(g, dngr, source, end):
     dist = [100] * len(g)
+    print(len(g))
     dist[source] = 0  # distance source vertex = 0, rest infinity
     vertex = []
     w = 0
@@ -54,7 +53,7 @@ def dijkstra(g, dngr, source, end):
 
     for i in range(len(g)):
         heapq.heappush(vertex, (dist[i], i))
-    parent = [-1] * 6  # array to store the shortest path from source
+    parent = [-1] * n  # array to store the shortest path from source
     while vertex:  # until all vertices are visited
         wei, v = heapq.heappop(vertex)
         if vis_d[v] == False:
@@ -122,14 +121,18 @@ goal = None
 
 
 def main_input():
-    global n,goal
+    global n,goal,graph
     n = int(input("Enter number of vertex:"))
-    print("Enter the weights in matrix:")
+    graph = [0] * n
     for i in range(n):
-        print(i, ":", end="")
-        graph_temp = [int(arr_temp) for arr_temp in input().strip().split()]
-        graph.append(graph_temp)
-
+        graph[i] = [0] * n
+    print("Enter the weights in matrix:")
+    for i in range(n-1):
+        graph[i][i] = 0
+        for j in range(i+1,n):
+            print("Weight between edge ",i," and ",j,": ")
+            graph[i][j] = int(input())
+            graph[j][i] = graph[i][j]
     goal = input("Enter goal node:")
 
 
@@ -146,7 +149,7 @@ if __name__ == '__main__':
     example = ThreadingExample()
     # time.sleep(30)
     # global danger_nodes
-    capture_image()
+    # capture_image()
     dnode = inf.main()
     danger_nodes.extend(dnode)
     danger_nodes = list(set(danger_nodes))
@@ -156,6 +159,18 @@ if __name__ == '__main__':
     print(danger_nodes)
     # run_arduino()
     # main()
+
+
+# 6
+# 0 7 9 0 0 14
+# 7 0 10 15 0 0
+# 9 10 0 11 0 2
+# 0 15 11 0 6 0
+# 0 0 0 6 0 9
+# 14 0 2 0 9 0
+# 4
+# 0
+
 
 
 # 4
@@ -175,3 +190,9 @@ if __name__ == '__main__':
 # 0 0 4 0 1 0
 # 4
 # 0
+
+# 4 3 2 0 0
+# 0 2 2 0
+# 2 0 4
+# 1 0
+# 1
