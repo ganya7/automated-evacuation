@@ -73,7 +73,7 @@ def dijkstra(g, dngr, source, end):
     distance = 0
     for k in range(len(path) - 1):
         distance = distance + graph[path[k]][path[k + 1]]
-    print(distance)
+    print("Shortest distance: ",distance)
     return dist[end]
 
 
@@ -152,10 +152,10 @@ if __name__ == '__main__':
     dnode = inf.main()
     danger_nodes.extend(dnode)
     danger_nodes = list(set(danger_nodes))
-    print("Danger nodes: ",danger_nodes)
+    print("Danger nodes: ",danger_nodes)    #danger nodes from congestion
     main_input()
     main()
-    print(danger_nodes)
+    print("Danger nodes: ",danger_nodes)    #danger nodes from arduino
     # run_arduino()
     # main()
 
