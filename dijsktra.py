@@ -39,7 +39,6 @@ class ThreadingExample(object):
 
 def dijkstra(g, dngr, source, end):
     dist = [100] * len(g)
-    print(len(g))
     dist[source] = 0  # distance source vertex = 0, rest infinity
     vertex = []
     w = 0
@@ -153,7 +152,7 @@ if __name__ == '__main__':
     dnode = inf.main()
     danger_nodes.extend(dnode)
     danger_nodes = list(set(danger_nodes))
-    print(danger_nodes)
+    print("Danger nodes: ",danger_nodes)
     main_input()
     main()
     print(danger_nodes)
